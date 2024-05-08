@@ -66,9 +66,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         Log.i(LOG_MAIN_ACTIVITY ,"onStart")
-       /*if(isPlaying){
+       if(isPlaying){
+           mediaPlayer?.seekTo(position)
            mediaPlayer?.start()
-       }*/
+       }
 
       //mediaPlayer = MediaPlayer.create(this, currentSong.audioResId)
       //  mediaPlayer?.start()
@@ -78,11 +79,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.i(LOG_MAIN_ACTIVITY ,"onResume")
-        if(isPlaying) {
+    /*    if(isPlaying) {
             mediaPlayer?.seekTo(position)
             mediaPlayer?.start()
          //   isPlaying = !isPlaying
-        }
+        }*/
     }
 
     override fun onPause() {
@@ -96,20 +97,27 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         Log.i(LOG_MAIN_ACTIVITY ,"onStop")
-       mediaPlayer?.stop()
+       /*mediaPlayer?.stop()
        mediaPlayer?.release()
-       mediaPlayer = null
+       mediaPlayer = null*/
 
     }
 
     override fun onRestart() {
         super.onRestart()
         Log.i(LOG_MAIN_ACTIVITY ,"onRestart")
+        val actualPosicion = mediaPlayer?.currentPosition
+        if (actualPosicion != null) {
+            if (actualPosicion > position)  position = actualPosicion
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.i(LOG_MAIN_ACTIVITY ,"onDestroy   ")
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 
 
